@@ -25,7 +25,7 @@ dependencies:
     - sudo chmod +x /usr/local/bin/terminus
 
   override:
-    - ./bin/wordpress-at-scale-auto-update.sh
+    - ./bin/drupal-auto-update.sh
 
 test:
   override:
