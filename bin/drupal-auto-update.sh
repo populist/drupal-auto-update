@@ -1,6 +1,6 @@
 #!/bin/bash
 
-MULTIDEV="update-drupal"
+MULTIDEV="update-d"
 
 UPDATES_APPLIED=false
 
@@ -75,7 +75,7 @@ else
 
     # ping the multidev environment to wake it from sleep
     echo -e "\nPinging the ${MULTIDEV} multidev environment to wake it from sleep..."
-    curl -I https://update-drupal-magic-drupal-updates.pantheonsite.io/
+    curl -I https://update-d-magic-drupal-updates.pantheonsite.io/
 
     # backstop visual regression
     echo -e "\nRunning BackstopJS tests..."

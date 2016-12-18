@@ -25,7 +25,7 @@
     {
       "label": "Homepage",
       "url": "http://live-magic-drupal-updates.pantheonsite.io/",
-      "referenceUrl": "https://update-drupal-magic-drupal-updates.pantheonsite.io/",
+      "referenceUrl": "https://update-d-magic-drupal-updates.pantheonsite.io/",
       "hideSelectors": [],
       "selectors": [
         "document"
