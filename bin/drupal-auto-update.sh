@@ -1,6 +1,6 @@
 #!/bin/bash
 
-MULTIDEV="update-wp"
+MULTIDEV="update-drupal"
 
 UPDATES_APPLIED=false
 
@@ -30,7 +30,7 @@ else
     echo -e "\nSetting the ${MULTIDEV} multidev to git mode"
     terminus site set-connection-mode --mode=git
 
-    # apply WordPress upstream updates
+    # apply Drupal upstream updates
     echo -e "\nApplying upstream updates on the ${MULTIDEV} multidev..."
     terminus site upstream-updates apply --yes --updatedb --accept-upstream
     UPDATES_APPLIED=true
@@ -40,49 +40,30 @@ fi
 echo -e "\nSetting the ${MULTIDEV} multidev to SFTP mode"
 terminus site set-connection-mode --mode=sftp
 
-# check for WordPress plugin updates
-echo -e "\nChecking for WordPress plugin updates on the ${MULTIDEV} multidev..."
-PLUGIN_UPDATES=$(terminus wp "plugin list --field=update" --format=bash)
+# check for Drupal plugin updates
+echo -e "\nChecking for Drupal plugin updates on the ${MULTIDEV} multidev..."
+PLUGIN_UPDATES=$(terminus drush "pm-updatestatus" --format=bash)
 
-if [[ ${PLUGIN_UPDATES} == *"available"* ]]
+if [[ ${PLUGIN_UPDATES} == *"Update available"* ]]
 then
-    # update WordPress plugins
-    echo -e "\nUpdating WordPress plugins on the ${MULTIDEV} multidev..."
-    terminus wp "plugin update --all"
+    # update Drupal plugins
+    echo -e "\nUpdating Drupal plugins on the ${MULTIDEV} multidev..."
+    terminus drush "pm-update -y"
 
-    # committing updated WordPress plugins
-    echo -e "\nCommitting WordPress plugin updates on the ${MULTIDEV} multidev..."
-    terminus site code commit --message="update WordPress plugins" --yes
+    # committing updated Drupal plugins
+    echo -e "\nCommitting Drupal plugin updates on the ${MULTIDEV} multidev..."
+    terminus site code commit --message="update Drupal plugins" --yes
     UPDATES_APPLIED=true
 else
-    # no WordPress plugin updates found
-    echo -e "\nNo WordPress plugin updates found on the ${MULTIDEV} multidev..."
-fi
-
-# check for WordPress theme updates
-echo -e "\nChecking for WordPress theme updates on the ${MULTIDEV} multidev..."
-THEME_UPDATES=$(terminus wp "theme list --field=update" --format=bash)
-
-if [[ ${THEME_UPDATES} == *"available"* ]]
-then
-    # update WordPress themes
-    echo -e "\nUpdating WordPress plugins on the ${MULTIDEV} multidev..."
-    terminus wp "theme update --all"
-
-    # committing updated WordPress themes
-    echo -e "\nCommitting WordPress theme updates on the ${MULTIDEV} multidev..."
-    terminus site code commit --message="update WordPress themes" --yes
-    UPDATES_APPLIED=true
-else
-    # no WordPress theme updates found
-    echo -e "\nNo WordPress theme updates found on the ${MULTIDEV} multidev..."
+    # no Drupal plugin updates found
+    echo -e "\nNo Drupal plugin updates found on the ${MULTIDEV} multidev..."
 fi
 
 if [[ "${UPDATES_APPLIED}" = false ]]
 then
     # no updates applied
     echo -e "\nNo updates to apply..."
-    SLACK_MESSAGE="scalewp.io Circle CI update check #${CIRCLE_BUILD_NUM} by ${CIRCLE_PROJECT_USERNAME}. No updates to apply, nothing deployed."
+    SLACK_MESSAGE="Drupal Magic Update Site Circle CI update check #${CIRCLE_BUILD_NUM} by ${CIRCLE_PROJECT_USERNAME}. No updates to apply, nothing deployed."
     echo -e "\nSending a message to the ${SLACK_CHANNEL} Slack channel"
     curl -X POST --data "payload={\"channel\": \"${SLACK_CHANNEL}\", \"username\": \"${SLACK_USERNAME}\", \"text\": \"${SLACK_MESSAGE}\"}" $SLACK_HOOK_URL
 else
@@ -94,7 +75,7 @@ else
 
     # ping the multidev environment to wake it from sleep
     echo -e "\nPinging the ${MULTIDEV} multidev environment to wake it from sleep..."
-    curl -I https://update-wp-wp-microsite.pantheonsite.io/
+    curl -I https://update-drupal-magic-drupal-updates.pantheonsite.io/
 
     # backstop visual regression
     echo -e "\nRunning BackstopJS tests..."
@@ -113,7 +94,7 @@ else
     then
         # visual regression failed
         echo -e "\nVisual regression tests failed! Please manually check the ${MULTIDEV} multidev..."
-        SLACK_MESSAGE="scalewp.io Circle CI update check #${CIRCLE_BUILD_NUM} by ${CIRCLE_PROJECT_USERNAME}. Visual regression tests failed on <https://dashboard.pantheon.io/sites/${SITE_UUID}#${MULTIDEV}/code|the ${MULTIDEV} environment>! Please test manually."
+        SLACK_MESSAGE="Drupal Magic Update Site Circle CI update check #${CIRCLE_BUILD_NUM} by ${CIRCLE_PROJECT_USERNAME}. Visual regression tests failed on <https://dashboard.pantheon.io/sites/${SITE_UUID}#${MULTIDEV}/code|the ${MULTIDEV} environment>! Please test manually."
         echo -e "\nSending a message to the ${SLACK_CHANNEL} Slack channel"
         curl -X POST --data "payload={\"channel\": \"${SLACK_CHANNEL}\", \"username\": \"${SLACK_USERNAME}\", \"text\": \"${SLACK_MESSAGE}\"}" $SLACK_HOOK_URL
         exit 1
@@ -131,7 +112,7 @@ else
 
         # deploy to test
         echo -e "\nDeploying the updates from dev to test..."
-        terminus site deploy --env=test --sync-content --cc --note="Auto deploy of WordPress updates (core, plugin, themes)"
+        terminus site deploy --env=test --sync-content --cc --note="Auto deploy of Drupal updates (core, plugin, themes)"
 
         # backup the live site
         echo -e "\nBacking up the live environment..."
@@ -139,10 +120,10 @@ else
 
         # deploy to live
         echo -e "\nDeploying the updates from test to live..."
-        terminus site deploy --env=live --cc --note="Auto deploy of WordPress updates (core, plugin, themes)"
+        terminus site deploy --env=live --cc --note="Auto deploy of Drupal updates (core, plugin, themes)"
 
-        echo -e "\nVisual regression tests passed! WordPress updates deployed to live..."
-        SLACK_MESSAGE="scalewp.io Circle CI update check #${CIRCLE_BUILD_NUM} by ${CIRCLE_PROJECT_USERNAME} Visual regression tests passed! WordPress updates deployed to <https://dashboard.pantheon.io/sites/${SITE_UUID}#live/deploys|the live environment>."
+        echo -e "\nVisual regression tests passed! Drupal updates deployed to live..."
+        SLACK_MESSAGE="Drupal Magic Update Site Circle CI update check #${CIRCLE_BUILD_NUM} by ${CIRCLE_PROJECT_USERNAME} Visual regression tests passed! Drupal updates deployed to <https://dashboard.pantheon.io/sites/${SITE_UUID}#live/deploys|the live environment>."
         echo -e "\nSending a message to the ${SLACK_CHANNEL} Slack channel"
         curl -X POST --data "payload={\"channel\": \"${SLACK_CHANNEL}\", \"username\": \"${SLACK_USERNAME}\", \"text\": \"${SLACK_MESSAGE}\"}" $SLACK_HOOK_URL
     fi

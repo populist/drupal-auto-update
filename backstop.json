@@ -24,104 +24,14 @@
   "scenarios": [
     {
       "label": "Homepage",
-      "url": "https://www.scalewp.io/",
-      "referenceUrl": "https://update-wp-wp-microsite.pantheonsite.io/",
+      "url": "http://live-magic-drupal-updates.pantheonsite.io/",
+      "referenceUrl": "https://update-drupal-magic-drupal-updates.pantheonsite.io/",
       "hideSelectors": [],
       "selectors": [
         "document"
       ],
       "readyEvent": null,
       "delay": 1500,
-      "misMatchThreshold" : 0.1
-    },
-    {
-      "label": "Elastic Architecture",
-      "url": "https://www.scalewp.io/elastic-architecture/",
-      "referenceUrl": "https://update-wp-wp-microsite.pantheonsite.io/elastic-architecture/",
-      "selectors": ["document"],
-      "readyEvent": null,
-      "delay": 500,
-      "misMatchThreshold" : 0.1
-    },
-    {
-      "label": "Page Caching",
-      "url": "https://www.scalewp.io/page-caching/",
-      "referenceUrl": "https://update-wp-wp-microsite.pantheonsite.io/page-caching/",
-      "selectors": ["document"],
-      "readyEvent": null,
-      "delay": 500,
-      "misMatchThreshold" : 0.1
-    },
-    {
-      "label": "Object Caching",
-      "url": "https://www.scalewp.io/object-caching/",
-      "referenceUrl": "https://update-wp-wp-microsite.pantheonsite.io/object-caching/",
-      "selectors": ["document"],
-      "readyEvent": null,
-      "delay": 500,
-      "misMatchThreshold" : 0.1
-    },
-    {
-      "label": "Query Performance",
-      "url": "https://www.scalewp.io/query-performance/",
-      "referenceUrl": "https://update-wp-wp-microsite.pantheonsite.io/query-performance/",
-      "selectors": ["document"],
-      "readyEvent": null,
-      "delay": 500,
-      "misMatchThreshold" : 0.1
-    },
-    {
-      "label": "Searching For Scale",
-      "url": "https://www.scalewp.io/searching-for-scale/",
-      "referenceUrl": "https://update-wp-wp-microsite.pantheonsite.io/searching-for-scale/",
-      "selectors": ["document"],
-      "readyEvent": null,
-      "delay": 500,
-      "misMatchThreshold" : 0.1
-    },
-    {
-      "label": "Scalable Architecture",
-      "url": "https://www.scalewp.io/a-real-world-scalable-architecture/",
-      "referenceUrl": "https://update-wp-wp-microsite.pantheonsite.io/a-real-world-scalable-architecture/",
-      "selectors": ["document"],
-      "readyEvent": null,
-      "delay": 500,
-      "misMatchThreshold" : 0.1
-    },
-    {
-      "label": "Development and Workflow",
-      "url": "https://www.scalewp.io/a-real-world-scalable-architecture/",
-      "referenceUrl": "https://update-wp-wp-microsite.pantheonsite.io/a-real-world-scalable-architecture/",
-      "selectors": ["document"],
-      "readyEvent": null,
-      "delay": 500,
-      "misMatchThreshold" : 0.1
-    },
-    {
-      "label": "Resources",
-      "url": "https://www.scalewp.io/resources/",
-      "referenceUrl": "https://update-wp-wp-microsite.pantheonsite.io/resources/",
-      "selectors": ["document"],
-      "readyEvent": null,
-      "delay": 500,
-      "misMatchThreshold" : 0.1
-    },
-    {
-      "label": "About",
-      "url": "https://www.scalewp.io/about/",
-      "referenceUrl": "https://update-wp-wp-microsite.pantheonsite.io/about/",
-      "selectors": ["document"],
-      "readyEvent": null,
-      "delay": 500,
-      "misMatchThreshold" : 0.1
-    },
-    {
-      "label": "Contribute",
-      "url": "https://www.scalewp.io/contribute/",
-      "referenceUrl": "https://update-wp-wp-microsite.pantheonsite.io/contribute/",
-      "selectors": ["document"],
-      "readyEvent": null,
-      "delay": 500,
       "misMatchThreshold" : 0.1
     }
   ],
