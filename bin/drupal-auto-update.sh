@@ -48,7 +48,7 @@ if [[ ${PLUGIN_UPDATES} == *"Update available"* ]]
 then
     # update Drupal plugins
     echo -e "\nUpdating Drupal plugins on the ${MULTIDEV} multidev..."
-    terminus drush "pm-update -y"
+    terminus drush "pm-update --no-core -y"
 
     # committing updated Drupal plugins
     echo -e "\nCommitting Drupal plugin updates on the ${MULTIDEV} multidev..."
