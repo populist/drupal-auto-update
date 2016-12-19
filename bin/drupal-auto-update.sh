@@ -44,7 +44,7 @@ terminus site set-connection-mode --mode=sftp
 echo -e "\nChecking for Drupal plugin updates on the ${MULTIDEV} multidev..."
 PLUGIN_UPDATES=$(terminus drush "pm-updatestatus" --format=bash)
 
-if [[ ${PLUGIN_UPDATES} == *"Update available"* ]]
+if [[ ${PLUGIN_UPDATES} != "" ]]
 then
     # update Drupal plugins
     echo -e "\nUpdating Drupal plugins on the ${MULTIDEV} multidev..."
