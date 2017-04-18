@@ -107,7 +107,7 @@ switch($slack_type) {
     _slack_tell( $slack_message, $slack_channel, $slack_agent, $slack_icon, $slack_color);
 		$slack_message = array();
 		$slack_message['Operation'] = 'terminus upstream:updates:apply';
-		$slack_message['Site URL'] = 'https://update-dr-drupalcon-github-magic.pantheonsite.io';
+		$slack_message['Environment'] = '`update-dr`';
 		_slack_tell( $slack_message, $slack_channel, $slack_agent, $slack_icon, $slack_color);
     break;
   case 'terminus_moduleupdates':
@@ -118,18 +118,18 @@ switch($slack_type) {
     _slack_tell( $slack_message, $slack_channel, $slack_agent, $slack_icon, $slack_color);
     $slack_message = array();
     $slack_message['Operation'] = 'terminus drush pm-updatecode';
-    $slack_message['Site URL'] = 'https://update-dr-drupalcon-github-magic.pantheonsite.io';
+    $slack_message['Environment'] = '`update-dr`';
     _slack_tell( $slack_message, $slack_channel, $slack_agent, $slack_icon, $slack_color);
     break;
   case 'pantheon_multidev_setup':
     $slack_agent = 'Terminus';
     $slack_icon = 'http://live-drupalcon-github-magic.pantheonsite.io/sites/default/files/icons/terminus2.png';
     $slack_color = '#1ec503';
-    $slack_message = "Setting up Pantheon Multidev `update-dr` for the testing environment...";
+    $slack_message = "Setting up a testing environment with Pantheon Multidev...";
     _slack_tell( $slack_message, $slack_channel, $slack_agent, $slack_icon, $slack_color);
     $slack_message = array();
     $slack_message['Operation'] = 'terminus multidev:create';
-    $slack_message['Site URL'] = 'https://update-dr-drupalcon-github-magic.pantheonsite.io';
+    $slack_message['Environment'] = '`update-dr`';
     _slack_tell( $slack_message, $slack_channel, $slack_agent, $slack_icon, $slack_color);
     break;
   case 'pantheon_deploy':

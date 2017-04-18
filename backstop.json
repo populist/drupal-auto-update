@@ -9,8 +9,8 @@
   "scenarios": [
     {
       "label": "Homepage",
-      "url": "http://live-magic-drupal-updates.pantheonsite.io/",
-      "referenceUrl": "https://update-dr-magic-drupal-updates.pantheonsite.io/",
+      "url": "http://live-museo-de-arte-updates.pantheonsite.io/",
+      "referenceUrl": "https://update-dr-museo-de-arte-updates.pantheonsite.io/",
       "hideSelectors": [],
       "selectors": [
         "document"
