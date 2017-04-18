@@ -17,7 +17,7 @@ switch($slack_type) {
     $slack_icon = 'http://live-drupalcon-github-magic.pantheonsite.io/sites/default/files/icons/drupal.png';
     $slack_color = '#0678BE';
     $slack_message = 'TODO';
-    _slack_tell( $slack_message, $slack_channel, $slack_agent, $slack_icon, $slack_color)
+    _slack_tell( $slack_message, $slack_channel, $slack_agent, $slack_icon, $slack_color);
     break;
   case 'visualregression_finished_same':
     $slack_agent = 'BackstopJS Visual Regression';
