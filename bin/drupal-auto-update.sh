@@ -82,6 +82,7 @@ else
 
     # backstop visual regression
     echo -e "\nRunning BackstopJS tests..."
+    php -f bin/slack_notify.php visual
     backstop reference
     VISUAL_REGRESSION_RESULTS=$(backstop test || echo 'true')
 
