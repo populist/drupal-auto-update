@@ -32,6 +32,7 @@ else
     # apply Drupal upstream updates
     echo -e "\nApplying upstream updates on the ${TERMINUS_ENV} multidev..."
     php -f bin/slack_notify.php drupal_coreupdates
+    php -f bin/slack_notify.php terminus_coreupdates
     terminus upstream:updates:apply $SITE_UUID.$TERMINUS_ENV --yes --updatedb --accept-upstream
     UPDATES_APPLIED=true
 fi
@@ -53,6 +54,7 @@ else
     # update Drupal modules
     echo -e "\nUpdating Drupal modules on the ${TERMINUS_ENV} multidev..."
     php -f bin/slack_notify.php drupal_moduleupdates ${PLUGIN_UPDATES}
+    php -f bin/slack_notify.php terminus_moduleupdates
     terminus drush $SITE_UUID.$TERMINUS_ENV -- pm-updatecode --no-core --yes
 
     # wake the site environment before committing code
@@ -91,13 +93,12 @@ else
         VISUAL_IMAGE_URL=$(php -f bin/post-image.php `find . | grep png | grep failed`)
 
         echo -e "\nVisual regression tests failed! Please manually check the ${TERMINUS_ENV} multidev..."
-        SLACK_MESSAGE="Circle CI update check #${CIRCLE_BUILD_NUM} by ${CIRCLE_PROJECT_USERNAME}. Visual regression tests failed on <https://dashboard.pantheon.io/sites/${SITE_UUID}#${TERMINUS_ENV}/code|the ${TERMINUS_ENV} environment>! Please review and manually - ${VISUAL_IMAGE_URL}"
-        echo -e "\nSending a message to the ${SLACK_CHANNEL} Slack channel"
-        curl -X POST --data "payload={\"channel\": \"${SLACK_CHANNEL}\", \"username\": \"${SLACK_USERNAME}\", \"text\": \"${SLACK_MESSAGE}\"}" $SLACK_HOOK_URL
+        php -f bin/slack_notify.php visual_different ${VISUAL_IMAGE_URL}
         exit 1
     else
         # visual regression passed
         echo -e "\nVisual regression tests passed between the ${TERMINUS_ENV} multidev and live."
+        php -f bin/slack_notify.php visual_same
 
         # enable git mode on dev
         echo -e "\nEnabling git mode on the dev environment..."
@@ -109,19 +110,20 @@ else
         
         # deploy to test
         echo -e "\nDeploying the updates from dev to test..."
+        php -f bin/slack_notify.php pantheon_deploy test
         terminus env:deploy $SITE_UUID.test --sync-content --cc --note="Auto deploy of Drupal updates (core, modules)" --updatedb
 
         # backup the live site
         echo -e "\nBacking up the live environment..."
+        hp -f bin/slack_notify.php pantheon_backup
         terminus backup:create $SITE_UUID.live --element=all --keep-for=30
 
         # deploy to live
         echo -e "\nDeploying the updates from test to live..."
+        php -f bin/slack_notify.php pantheon_deploy live
         terminus env:deploy $SITE_UUID.live --cc --note="Auto deploy of Drupal updates (core, modules)" --updatedb
 
         echo -e "\nVisual regression tests passed! Drupal updates deployed to live..."
-        SLACK_MESSAGE="I've updated ${CIRCLE_PROJECT_REPONAME} on build #${CIRCLE_BUILD_NUM} and the visual regression tests passed! Drupal updates deployed to <https://dashboard.pantheon.io/sites/${SITE_UUID}#live/deploys|the live environment>."
-        echo -e "\nSending a message to the ${SLACK_CHANNEL} Slack channel"
-        curl -X POST --data "payload={\"channel\": \"${SLACK_CHANNEL}\", \"username\": \"${SLACK_USERNAME}\", \"text\": \"${SLACK_MESSAGE}\"}" $SLACK_HOOK_URL
+        php -f bin/slack_notify.php wizard_done
     fi
 fi

@@ -43,14 +43,14 @@ switch($slack_type) {
     $slack_message = array('The following contrib modules need updating: ' . $argv[2]);
     _slack_tell( $slack_message, $slack_channel, $slack_agent, $slack_icon, $slack_color);
     break;
-  case 'visualregression_finished_same':
+  case 'visual_same':
     $slack_agent = 'BackstopJS Visual Regression';
     $slack_icon = 'http://live-drupalcon-github-magic.pantheonsite.io/sites/default/files/icons/backstop.png';
     $slack_color = '#800080';
     $slack_message = 'No Visual Differences Detected!';
     _slack_tell( $slack_message, $slack_channel, $slack_agent, $slack_icon, $slack_color); 
     break;
-  case 'visualregression_finished_differences':
+  case 'visual_different':
     // Post the File Using Uploads.IM
     $file_name_with_full_path = $argv[2];
     $target_url = 'http://uploads.im/api';
@@ -67,10 +67,10 @@ switch($slack_type) {
     $slack_agent = 'BackstopJS Visual Regression';
     $slack_icon = 'http://live-drupalcon-github-magic.pantheonsite.io/sites/default/files/icons/backstop.png';
     $slack_color = '#800080';
-    $slack_message = 'Visual Differences Detected! ' . $curl_response->data->thumb_url;
+    $slack_message = 'Visual regression tests failed! Please review the <https://dashboard.pantheon.io/sites/${SITE_UUID}#${TERMINUS_ENV}/code|the ${TERMINUS_ENV} environment>! ' . $curl_response->data->thumb_url;
     _slack_tell( $slack_message, $slack_channel, $slack_agent, $slack_icon, $slack_color);
     break;
-  case 'visualregression':
+  case 'visual':
     $slack_agent = 'BackstopJS Visual Regression';
     $slack_icon = 'http://live-drupalcon-github-magic.pantheonsite.io/sites/default/files/icons/backstop.png';
     $slack_color = '#800080';
@@ -116,6 +116,28 @@ switch($slack_type) {
     $slack_message['CLI User'] = 'matt@pantheon.me';
     _slack_tell( $slack_message, $slack_channel, $slack_agent, $slack_icon, $slack_color);
     break;
+  case 'terminus_coreupdates':
+    $slack_agent = 'Terminus';
+    $slack_icon = 'http://live-drupalcon-github-magic.pantheonsite.io/sites/default/files/icons/terminus2.png';
+    $slack_color = '#1ec503';
+    $slack_message = "Applying Drupal core update...";
+    _slack_tell( $slack_message, $slack_channel, $slack_agent, $slack_icon, $slack_color);
+		$slack_message = array();
+		$slack_message['Operation'] = 'terminus upstream:updates:apply';
+		$slack_message['Site URL'] = 'https://update-dr-drupalcon-github-magic.pantheonsite.io';
+		_slack_tell( $slack_message, $slack_channel, $slack_agent, $slack_icon, $slack_color);
+    break;
+  case 'terminus_moduleupdates':
+    $slack_agent = 'Terminus';
+    $slack_icon = 'http://live-drupalcon-github-magic.pantheonsite.io/sites/default/files/icons/terminus2.png';
+    $slack_color = '#1ec503';
+    $slack_message = "Applying Drupal contrib updates...";
+    _slack_tell( $slack_message, $slack_channel, $slack_agent, $slack_icon, $slack_color);
+    $slack_message = array();
+    $slack_message['Operation'] = 'terminus drush pm-updatecode';
+    $slack_message['Site URL'] = 'https://update-dr-drupalcon-github-magic.pantheonsite.io';
+    _slack_tell( $slack_message, $slack_channel, $slack_agent, $slack_icon, $slack_color);
+    break;
   case 'pantheon_multidev_setup':
     $slack_agent = 'Terminus';
     $slack_icon = 'http://live-drupalcon-github-magic.pantheonsite.io/sites/default/files/icons/terminus2.png';
@@ -126,6 +148,22 @@ switch($slack_type) {
     $slack_message['Operation'] = 'terminus multidev:create';
     $slack_message['Site URL'] = 'https://update-dr-drupalcon-github-magic.pantheonsite.io';
     _slack_tell( $slack_message, $slack_channel, $slack_agent, $slack_icon, $slack_color);
+    break;
+  case 'pantheon_deploy':
+    $slack_agent = 'Pantheon';
+    $slack_icon = 'http://live-drupalcon-github-magic.pantheonsite.io/sites/default/files/icons/pantheon.png';
+    $slack_color = '#EFD01B';
+    $slack_message = array();
+    $slack_message['Deploy Message'] = 'Auto deploy of Drupal updates (core, modules)';
+    $slack_message['Environment'] = '`' . $argv[2] . '`';
+    _slack_tell( $slack_message, $slack_channel, $slack_agent, $slack_icon, $slack_color);
+    break;
+  case 'pantheon_backup':
+    $slack_agent = 'Pantheon';
+    $slack_icon = 'http://live-drupalcon-github-magic.pantheonsite.io/sites/default/files/icons/pantheon.png';
+    $slack_color = '#EFD01B';
+    $slack_message = 'Creating a backup of the `live` environment.';
+    _slack_tell( $slack_message, $slack_channel, $slack_agent, $slack_icon, $slack_color);   
     break;
   case 'wizard_noupdates':
     $slack_agent = 'Drupal Update Wizard';
@@ -139,6 +177,13 @@ switch($slack_type) {
 		$slack_icon = '';
     $slack_color = '#666666';
     $slack_message = 'New updates were found! Let\'s do this!';
+    _slack_tell( $slack_message, $slack_channel, $slack_agent, $slack_icon, $slack_color);
+    break;
+	case 'wizard_done':
+		$slack_agent = 'Drupal Update Wizard';
+		$slack_icon = '';
+		$slack_color = '#666666';
+    $slack_message = 'Updates are completed. Have a good day!';
     _slack_tell( $slack_message, $slack_channel, $slack_agent, $slack_icon, $slack_color);
     break;
 }
