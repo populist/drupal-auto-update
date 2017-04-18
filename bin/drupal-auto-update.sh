@@ -19,7 +19,7 @@ echo -e "\nChecking for upstream updates on the ${TERMINUS_ENV} multidev..."
 php -f bin/slack_notify.php drupal_updates
 UPSTREAM_UPDATES="$(terminus upstream:updates:list $SITE_UUID.$TERMINUS_ENV  --format=list  2>&1)"
 
-if [[ ${UPSTREAM_UPDATES} == *"No updates"* ]]
+if [[ ${UPSTREAM_UPDATES} == *"no available updates"* ]]
 then
     # no upstream updates available
     echo -e "\nNo upstream updates found on the ${TERMINUS_ENV} multidev..."
