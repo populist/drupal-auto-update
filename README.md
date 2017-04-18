@@ -33,7 +33,6 @@ This script will:
 	* `TERMINUS_MACHINE_TOKEN`: A [Pantheon Terminus machine token](https://pantheon.io/docs/machine-tokens/) with access to the site
 	* `SLACK_URL`: The [Slack incoming webhook URL](https://api.slack.com/incoming-webhooks)
 	* `SLACK_CHANNEL`: The Slack channel to post notifications to
-	* `SLACK_USERNAME`: The username to post to Slack with
 3. Add an [SSH key to Pantheon](https://pantheon.io/docs/ssh-keys/) and [to the CircleCI project](https://circleci.com/docs/permissions-and-access-during-deployment/).
 4. Update the site UUID in the `.env` file
 5. Update _scenarios_ in `backstop.js` with URLs for pages you wish to check with visual regression
