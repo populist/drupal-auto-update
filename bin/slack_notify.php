@@ -26,7 +26,7 @@ switch($slack_type) {
 		$slack_agent = 'Drupal Update Manager';
 		$slack_icon = 'http://live-drupalcon-github-magic.pantheonsite.io/sites/default/files/icons/drupal.png';
 		$slack_color = '#0678BE';
-		$slack_message = array('Drupal core has an update *available*');
+		$slack_message = array('Drupal core has an update *available*: ' . $argv[2]);
 		_slack_tell( $slack_message, $slack_channel, $slack_agent, $slack_icon, $slack_color);
 		break;
 	case 'drupal_no_moduleupdates':
