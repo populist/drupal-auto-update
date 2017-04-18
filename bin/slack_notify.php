@@ -120,7 +120,7 @@ switch($slack_type) {
     $slack_agent = 'Terminus';
     $slack_icon = 'http://live-drupalcon-github-magic.pantheonsite.io/sites/default/files/icons/terminus2.png';
     $slack_color = '#1ec503';
-    $slack_message = "Applying update for Drupal core...';
+    $slack_message = 'Applying update for Drupal core...';
     _slack_tell( $slack_message, $slack_channel, $slack_agent, $slack_icon, $slack_color);
 		$slack_message = array();
 		$slack_message['Operation'] = 'terminus upstream:updates:apply';
