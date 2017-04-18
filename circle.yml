@@ -19,7 +19,7 @@ machine:
     #
     SLACK_USERNAME: "Drupal Update Wizard"
     TERMINUS_ENV: "update-dr" 
-    PATH: ~/.composer/vendor/bin:~/.config/composer/vendor/bin
+    PATH: $PATH:~/.composer/vendor/bin:~/.config/composer/vendor/bin
 
 dependencies:
   cache_directories:
