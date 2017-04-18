@@ -3,7 +3,7 @@ machine:
     America/Chicago
 
   node:
-    version: 5.5.0 
+    version: 4.2.6
 
   php:
     version: 7.0.11
@@ -24,8 +24,8 @@ machine:
 dependencies:
   cache_directories:
     - ~/.composer/cache
-    - /opt/circleci/nodejs/v5.5.0/lib/node_modules
-    - /opt/circleci/nodejs/v5.5.0/bin
+    - /opt/circleci/nodejs/v4.2.6/lib/node_modules
+    - /opt/circleci/nodejs/v4.2.6/bin
 
   pre:
     # Install BackstopJS and SlimerJS

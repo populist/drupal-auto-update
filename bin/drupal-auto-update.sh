@@ -40,16 +40,16 @@ terminus connection:set $SITE_UUID.$TERMINUS_ENV sftp
 
 # check for Drupal module updates
 echo -e "\nChecking for Drupal module updates on the ${TERMINUS_ENV} multidev..."
-PLUGIN_UPDATES="$(terminus drush $SITE_UUID.$TERMINUS_ENV -- plugin list --update=available --format=count)"
+PLUGIN_UPDATES="$(terminus drush $SITE_UUID.$TERMINUS_ENV -- pm-updatestatus --format=list)"
 
-if [[ ${PLUGIN_UPDATES} == "0" ]]
+if [[ ${PLUGIN_UPDATES} == "" ]]
 then
     # no Drupal module updates found
     echo -e "\nNo Drupal module updates found on the ${TERMINUS_ENV} multidev..."
 else
     # update Drupal modules
     echo -e "\nUpdating Drupal modules on the ${TERMINUS_ENV} multidev..."
-    terminus drush $SITE_UUID.$TERMINUS_ENV -- pm-update drupal
+    terminus drush $SITE_UUID.$TERMINUS_ENV -- pm-updatecode --no-core
 
     # wake the site environment before committing code
     echo -e "\nWaking the ${TERMINUS_ENV} multidev..."
@@ -57,7 +57,7 @@ else
 
     # committing updated Drupal modules
     echo -e "\nCommitting Drupal modules updates on the ${TERMINUS_ENV} multidev..."
-    terminus env:commit $SITE_UUID.$TERMINUS_ENV --message="update Drupal modules" --yes
+    terminus env:commit $SITE_UUID.$TERMINUS_ENV --message="Updates for the following Drupal modules: ${PLUGIN_UPDATES}" --yes
     UPDATES_APPLIED=true
    
     
@@ -113,7 +113,7 @@ else
         
         # deploy to test
         echo -e "\nDeploying the updates from dev to test..."
-        terminus env:deploy $SITE_UUID.test --sync-content --cc --note="Auto deploy of Drupal updates (core, modules)"
+        terminus env:deploy $SITE_UUID.test --sync-content --cc --note="Auto deploy of Drupal updates (core, modules)" --updatedb
 
         # backup the live site
         echo -e "\nBacking up the live environment..."
@@ -121,11 +121,8 @@ else
 
         # deploy to live
         echo -e "\nDeploying the updates from test to live..."
-        terminus env:deploy $SITE_UUID.live --cc --note="Auto deploy of Drupal updates (core, modules)"
+        terminus env:deploy $SITE_UUID.live --cc --note="Auto deploy of Drupal updates (core, modules)" --updatedb
 
-        # update Drupal database on live
-        echo -e "\nUpdating the database on the live environment..."
-        terminus drush $SITE_UUID.live -- pm-update drupal
 
         echo -e "\nVisual regression tests passed! Drupal updates deployed to live..."
         SLACK_MESSAGE="I've updated ${CIRCLE_PROJECT_REPONAME} on build #${CIRCLE_BUILD_NUM} and the visual regression tests passed! Drupal updates deployed to <https://dashboard.pantheon.io/sites/${SITE_UUID}#live/deploys|the live environment>."
