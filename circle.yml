@@ -13,6 +13,7 @@ machine:
 
 dependencies:
   cache_directories:
+    - ~/.composer/cache
     - ~/node_modules
     - /home/ubuntu/nvm/versions/node/4.4.7/bin
     - /home/ubuntu/nvm/versions/node/4.4.7/lib/node_modules
