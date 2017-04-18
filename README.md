@@ -31,7 +31,7 @@ This script will:
 2. Add [environment variables to CircleCI](https://circleci.com/docs/environment-variables/) for the following:
 	* `SITE_UUID`: The [Pantheon site UUID](https://pantheon.io/docs/sites/#site-uuid)
 	* `TERMINUS_MACHINE_TOKEN`: A [Pantheon Terminus machine token](https://pantheon.io/docs/machine-tokens/) with access to the site
-	* `SLACK_HOOK_URL`: The [Slack incoming webhook URL](https://api.slack.com/incoming-webhooks)
+	* `SLACK_URL`: The [Slack incoming webhook URL](https://api.slack.com/incoming-webhooks)
 	* `SLACK_CHANNEL`: The Slack channel to post notifications to
 	* `SLACK_USERNAME`: The username to post to Slack with
 3. Add an [SSH key to Pantheon](https://pantheon.io/docs/ssh-keys/) and [to the CircleCI project](https://circleci.com/docs/permissions-and-access-during-deployment/).
