@@ -29,7 +29,7 @@ dependencies:
 
   pre:
     # Kick off Slack Notification
-    php -f bin/slack_notify.php circle_start "${CIRCLE_BUILD_NUM}"
+    - php -f bin/slack_notify.php circle_start "${CIRCLE_BUILD_NUM}"
 
     # Install BackstopJS and SlimerJS
     - npm install -g backstopjs
