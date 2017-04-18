@@ -69,11 +69,10 @@ if [[ "${UPDATES_APPLIED}" = false ]]
 then
     # no updates applied
     echo -e "\nNo updates to apply..."
-    SLACK_MESSAGE="No updates on build #${CIRCLE_BUILD_NUM} for ${CIRCLE_PROJECT_USERNAME}. I'm going back to sleep."
-    echo -e "\nSending a message to the ${SLACK_CHANNEL} Slack channel"
-    curl -X POST --data "payload={\"channel\": \"${SLACK_CHANNEL}\", \"username\": \"${SLACK_USERNAME}\", \"text\": \"${SLACK_MESSAGE}\"}" $SLACK_HOOK_URL
+    php -f bin/slack_notify.php wizard_noupdates
 else
     # updates applied, carry on
+    php -f bin/slack_notify.php wizard_updates
 
     # ping the multidev environment to wake it from sleep
     echo -e "\nPinging the ${TERMINUS_ENV} multidev environment to wake it from sleep..."
@@ -86,7 +85,6 @@ else
 
     echo "${VISUAL_REGRESSION_RESULTS}"
 
-    cd ~ 
     if [[ ${VISUAL_REGRESSION_RESULTS} == *"Mismatch errors found"* ]]
     then
         # Visual Regression Failed. Get Visual Difference Image
