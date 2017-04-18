@@ -91,10 +91,8 @@ else
     if [[ ${VISUAL_REGRESSION_RESULTS} == *"Mismatch errors found"* ]]
     then
         # Visual Regression Failed. Get Visual Difference Image
-        VISUAL_IMAGE_URL=$(php -f bin/post-image.php `find . | grep png | grep failed`)
-
         echo -e "\nVisual regression tests failed! Please manually check the ${TERMINUS_ENV} multidev..."
-        php -f bin/slack_notify.php visual_different ${VISUAL_IMAGE_URL}
+        php -f bin/slack_notify.php visual_different `find . | grep png | grep failed`
         exit 1
     else
         # visual regression passed
@@ -125,6 +123,6 @@ else
         terminus env:deploy $SITE_UUID.live --cc --note="Auto deploy of Drupal updates (core, modules)" --updatedb
 
         echo -e "\nVisual regression tests passed! Drupal updates deployed to live..."
-        php -f bin/slack_notify.php wizard_done
+        php -f bin/slack_notify.php wizard_done `find . | grep document_0_desktop | grep test`
     fi
 fi

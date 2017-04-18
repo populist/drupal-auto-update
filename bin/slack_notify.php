@@ -74,25 +74,8 @@ switch($slack_type) {
     $slack_agent = 'BackstopJS Visual Regression';
     $slack_icon = 'http://live-drupalcon-github-magic.pantheonsite.io/sites/default/files/icons/backstop.png';
     $slack_color = '#800080';
-    $slack_message = array('Kicking off a Visual Regression test using BackstopJS between the `ci-test` and `live` environments...');
+    $slack_message = 'Kicking off a Visual Regression test using BackstopJS between the `ci-test` and `live` environments...';
     _slack_tell( $slack_message, $slack_channel, $slack_agent, $slack_icon, $slack_color); 
-    break;
-  case 'behat': 
-    $slack_agent = 'Behat';
-    $slack_icon = 'http://live-drupalcon-github-magic.pantheonsite.io/sites/default/files/icons/behat.png';
-    $slack_color = '#0000000';
-    $slack_message = 'Kicking off Behavioral Testing with Behat...';
-    _slack_tell( $slack_message, $slack_channel, $slack_agent, $slack_icon, $slack_color);
-    $slack_message = array();
-    $slack_message[] = '*Scenario*: A user should see "El Museo de Arte" on the homepage' . "\n" . '     *Given* I am on the homepage' . "\n" .  '      *Then* I should see the text "El Museo de Arte"';
-    _slack_tell( $slack_message, $slack_channel, $slack_agent, $slack_icon, $slack_color);
-    break;
-  case 'behat_finished':
-    $slack_agent = 'Behat';
-    $slack_icon = 'http://live-drupalcon-github-magic.pantheonsite.io/sites/default/files/icons/behat.png';
-    $slack_color = '#00ff00';
-    $slack_message = 'Testing result: *Build PASSED*';
-    _slack_tell( $slack_message, $slack_channel, $slack_agent, $slack_icon, $slack_color);
     break;
   case 'circle_start':
     $slack_agent = 'CircleCI';
@@ -176,14 +159,28 @@ switch($slack_type) {
 		$slack_agent = 'Drupal Update Wizard';
 		$slack_icon = '';
     $slack_color = '#666666';
-    $slack_message = 'New updates are present and available for testing! Let\'s do this! https://media.giphy.com/media/12l061Wfv9RKes/giphy.gif';
+    $slack_message = 'New updates are present and available for testing! https://media.giphy.com/media/12l061Wfv9RKes/giphy.gif';
     _slack_tell( $slack_message, $slack_channel, $slack_agent, $slack_icon, $slack_color);
     break;
 	case 'wizard_done':
 		$slack_agent = 'Drupal Update Wizard';
 		$slack_icon = '';
 		$slack_color = '#666666';
-    $slack_message = 'Your updates have been tested and applied. Have a good day!';
+
+    // Post the File Using Uploads.IM
+    $file_name_with_full_path = $argv[2];
+    $target_url = 'http://uploads.im/api';
+    $cFile = curl_file_create($file_name_with_full_path);
+    $post = array('format' => 'json','file_contents'=> $cFile);
+    $curl = curl_init();
+    curl_setopt($curl, CURLOPT_URL,$target_url);
+    curl_setopt($curl, CURLOPT_POST,1);
+    curl_setopt($curl, CURLOPT_POSTFIELDS, $post);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
+    $curl_response = json_decode(curl_exec($curl));
+    curl_close($curl);
+
+    $slack_message = 'Your updates have been tested and applied. Enjoy your updated site! - ' . $curl_response->data->thumb_url;
     _slack_tell( $slack_message, $slack_channel, $slack_agent, $slack_icon, $slack_color);
     break;
 }
