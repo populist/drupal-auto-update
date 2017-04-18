@@ -49,7 +49,7 @@ then
 else
     # update Drupal modules
     echo -e "\nUpdating Drupal modules on the ${TERMINUS_ENV} multidev..."
-    terminus drush $SITE_UUID.$TERMINUS_ENV -- pm-updatecode --no-core
+    terminus drush $SITE_UUID.$TERMINUS_ENV -- pm-updatecode --no-core --yes
 
     # wake the site environment before committing code
     echo -e "\nWaking the ${TERMINUS_ENV} multidev..."
