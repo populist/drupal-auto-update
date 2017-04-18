@@ -92,13 +92,12 @@ else
     if [[ ${VISUAL_REGRESSION_RESULTS} == *"Mismatch errors found"* ]]
     then
         # Visual Regression Failed. Get Visual Difference Image
-        VISUAL_IMAGE_URL=$(php -f bin/post_image.php `find . | grep png | grep failed`)
+        VISUAL_IMAGE_URL=$(php -f bin/post-image.php `find . | grep png | grep failed`)
 
         echo -e "\nVisual regression tests failed! Please manually check the ${TERMINUS_ENV} multidev..."
         SLACK_MESSAGE="Circle CI update check #${CIRCLE_BUILD_NUM} by ${CIRCLE_PROJECT_USERNAME}. Visual regression tests failed on <https://dashboard.pantheon.io/sites/${SITE_UUID}#${TERMINUS_ENV}/code|the ${TERMINUS_ENV} environment>! Please review and manually - ${VISUAL_IMAGE_URL}"
         echo -e "\nSending a message to the ${SLACK_CHANNEL} Slack channel"
-        SLACK_ICON: "http://live-drupalcon-github-magic.pantheonsite.io/sites/default/files/icons/backstop.png"
-        curl -X POST --data "payload={\"channel\": \"${SLACK_CHANNEL}\", \"icon_url\": \"${SLACK_ICON}\". \"username\": \"${SLACK_USERNAME}\", \"text\": \"${SLACK_MESSAGE}\"}" $SLACK_HOOK_URL
+        curl -X POST --data "payload={\"channel\": \"${SLACK_CHANNEL}\", \"username\": \"${SLACK_USERNAME}\", \"text\": \"${SLACK_MESSAGE}\"}" $SLACK_HOOK_URL
         exit 1
     else
         # visual regression passed
