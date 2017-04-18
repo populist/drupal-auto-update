@@ -31,7 +31,7 @@ else
 
     # apply Drupal upstream updates
     echo -e "\nApplying upstream updates on the ${TERMINUS_ENV} multidev..."
-    php -f bin/slack_notify.php drupal_coreupdates `terminus upstream:updates:list ${SITE_UUID}.${TERMINUS_ENV} --field=message`
+    php -f bin/slack_notify.php drupal_coreupdates 
     php -f bin/slack_notify.php terminus_coreupdates 
     terminus upstream:updates:apply $SITE_UUID.$TERMINUS_ENV --yes --updatedb --accept-upstream
     UPDATES_APPLIED=true
