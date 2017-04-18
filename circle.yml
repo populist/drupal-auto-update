@@ -3,30 +3,36 @@ machine:
     America/Chicago
 
   node:
-    version: 4.4.7
+    version: 5.5.0 
 
   php:
-      version: 7.0.4
+    version: 7.0.11
 
   environment:
+    # In addition to the environment variables defined in this file, these
+    # other variables are defined in the Circle CI UI.
+    #
+    # SITE_UUID:              UUID of the Pantheon site to run tests on
+    # TERMINUS_MACHINE_TOKEN: The Pantheon machine token
+    # SLACK_CHANNEL:          The Slack channel for sending notifications
+    # SLACK_HOOK_URL:         The Slack endpoint for sending notifications
+    #
+    SLACK_USERNAME: "Drupal Update Wizard"
+    TERMINUS_ENV: "update-dr" 
     PATH: "${PATH}:${HOME}/terminus/bin"
 
 dependencies:
   cache_directories:
     - ~/.composer/cache
-    - ~/node_modules
-    - /home/ubuntu/nvm/versions/node/4.4.7/bin
-    - /home/ubuntu/nvm/versions/node/4.4.7/lib/node_modules
-    - ~/terminus
+    - /opt/circleci/nodejs/v5.5.0/lib/node_modules
+    - /opt/circleci/nodejs/v5.5.0/bin
 
   pre:
-
-    # Install gulp
-    - echo Installing gulp globally
-    - npm install -g gulp
-
+    # Install BackstopJS and SlimerJS
+    - npm install -g backstopjs
+    - npm install -g slimerjs
     # Install Terminus
-    - ./bin/install_terminus.sh
+    - composer global require -n  "pantheon-systems/terminus:^1"
 
   override:
     - ./bin/drupal-auto-update.sh

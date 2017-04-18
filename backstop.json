@@ -25,7 +25,7 @@
     {
       "label": "Homepage",
       "url": "http://live-magic-drupal-updates.pantheonsite.io/",
-      "referenceUrl": "https://update-d-magic-drupal-updates.pantheonsite.io/",
+      "referenceUrl": "https://update-dr-magic-drupal-updates.pantheonsite.io/",
       "hideSelectors": [],
       "selectors": [
         "document"
@@ -41,9 +41,14 @@
     "compare_data": "../../backstop_data/bitmaps_test/compare.json",
     "casper_scripts": "../../backstop_data/casper_scripts"
   },
-  "engine": "phantomjs",
-  "report": [ "CLI" ],
+  "engine": "slimer",
+  "report": [ "CI" ],
   "casperFlags": [],
   "debug": false,
-  "port": 3001
+  "port": 3001,
+  "ci": {
+    "format" :  "junit" ,
+    "testReportFileName": "ci-test-xunit",
+    "testSuiteName" :  "backstopJS"
+  }
 }
