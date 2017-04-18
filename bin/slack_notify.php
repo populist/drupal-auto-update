@@ -159,7 +159,7 @@ switch($slack_type) {
 		$slack_agent = 'Drupal Update Wizard';
 		$slack_icon = '';
     $slack_color = '#666666';
-    $slack_message = 'New updates are present and available for testing - https://media.giphy.com/media/12l061Wfv9RKes/giphy.gif';
+    $slack_message = 'New updates are present and available for testing! Time to do this - https://media.giphy.com/media/12l061Wfv9RKes/giphy.gif';
     _slack_tell( $slack_message, $slack_channel, $slack_agent, $slack_icon, $slack_color);
     break;
 	case 'wizard_done':
