@@ -114,7 +114,7 @@ else
 
         # backup the live site
         echo -e "\nBacking up the live environment..."
-        hp -f bin/slack_notify.php pantheon_backup
+        php -f bin/slack_notify.php pantheon_backup
         terminus backup:create $SITE_UUID.live --element=all --keep-for=30
 
         # deploy to live
