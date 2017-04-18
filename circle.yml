@@ -23,7 +23,7 @@ machine:
 
 dependencies:
   cache_directories:
-    - ~/.composer/cache
+    - ~/.composer
     - /opt/circleci/nodejs/v4.2.6/lib/node_modules
     - /opt/circleci/nodejs/v4.2.6/bin
 

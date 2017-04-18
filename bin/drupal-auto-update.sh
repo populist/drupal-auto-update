@@ -73,10 +73,6 @@ then
 else
     # updates applied, carry on
 
-    # install node dependencies
-    echo -e "\nRunning npm install..."
-    npm install
-
     # ping the multidev environment to wake it from sleep
     echo -e "\nPinging the ${TERMINUS_ENV} multidev environment to wake it from sleep..."
     terminus env:wake -n $SITE_UUID.$TERMINUS_ENV
@@ -88,7 +84,7 @@ else
 
     echo "${VISUAL_REGRESSION_RESULTS}"
 
-    cd -
+    cd ~ 
     if [[ ${VISUAL_REGRESSION_RESULTS} == *"Mismatch errors found"* ]]
     then
         # Visual Regression Failed. Get Visual Difference Image
@@ -122,7 +118,6 @@ else
         # deploy to live
         echo -e "\nDeploying the updates from test to live..."
         terminus env:deploy $SITE_UUID.live --cc --note="Auto deploy of Drupal updates (core, modules)" --updatedb
-
 
         echo -e "\nVisual regression tests passed! Drupal updates deployed to live..."
         SLACK_MESSAGE="I've updated ${CIRCLE_PROJECT_REPONAME} on build #${CIRCLE_BUILD_NUM} and the visual regression tests passed! Drupal updates deployed to <https://dashboard.pantheon.io/sites/${SITE_UUID}#live/deploys|the live environment>."
