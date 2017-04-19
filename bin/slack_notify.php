@@ -41,8 +41,8 @@ switch($slack_type) {
     $slack_icon = 'http://live-drupalcon-github-magic.pantheonsite.io/sites/default/files/icons/drupal.png';
     $slack_color = '#0678BE';
     $updates = '';
-    foreach(array_slice($argv,1) as $arg) {
-      $updates .= ' & ' . $arg;
+    foreach(array_slice($argv,2) as $arg) {
+      $updates .= $arg . ' ';
     }
     $slack_message = array('Drupal contrib has updates *available* for the following modules: ' . $updates);
     _slack_tell( $slack_message, $slack_channel, $slack_agent, $slack_icon, $slack_color);
