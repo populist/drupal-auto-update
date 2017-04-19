@@ -17,9 +17,9 @@ terminus multidev:create $SITE_UUID.live $TERMINUS_ENV
 # check for upstream updates
 echo -e "\nChecking for upstream updates on the ${TERMINUS_ENV} multidev..."
 php -f bin/slack_notify.php drupal_updates
-UPSTREAM_UPDATES="$(terminus upstream:updates:list $SITE_UUID.$TERMINUS_ENV  --format=list  2>&1)"
+UPSTREAM_UPDATES="$(terminus upstream:updates:list $SITE_UUID.$TERMINUS_ENV  --format=yaml)"
 
-if [[ ${UPSTREAM_UPDATES} == "" ]]
+if [[ ${UPSTREAM_UPDATES} == "{  }" ]]
 then
     # no upstream updates available
     echo -e "\nNo upstream updates found on the ${TERMINUS_ENV} multidev..."
