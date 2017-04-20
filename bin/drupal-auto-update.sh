@@ -63,7 +63,7 @@ else
 
     # committing updated Drupal modules
     echo -e "\nCommitting Drupal modules updates on the ${TERMINUS_ENV} multidev..."
-    terminus env:commit $SITE_UUID.$TERMINUS_ENV --message="Updates for the following Drupal modules: ${PLUGIN_UPDATES}" --yes
+    terminus env:commit $SITE_UUID.$TERMINUS_ENV --force --message="Updates for the following Drupal modules: ${PLUGIN_UPDATES}" --yes
     UPDATES_APPLIED=true
 fi
 
