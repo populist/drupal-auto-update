@@ -75,7 +75,7 @@ switch($slack_type) {
     $slack_agent = 'BackstopJS Visual Regression';
     $slack_icon = 'http://live-drupalcon-github-magic.pantheonsite.io/sites/default/files/icons/backstop.png';
     $slack_color = '#800080';
-    $slack_message = 'Kicking off a Visual Regression test using BackstopJS between the `ci-test` and `live` environments...';
+    $slack_message = 'Kicking off a Visual Regression test using BackstopJS between the `update-dr` and `live` environments...';
     _slack_tell( $slack_message, $slack_channel, $slack_agent, $slack_icon, $slack_color); 
     break;
   case 'circle_start':
@@ -96,7 +96,7 @@ switch($slack_type) {
     $slack_message = "Authenticating to Pantheon with Terminus machine token...";
     _slack_tell( $slack_message, $slack_channel, $slack_agent, $slack_icon, $slack_color);
     $slack_message = array();
-    $slack_message['CLI Version'] = '1.1.2';
+    $slack_message['CLI Version'] = '1.3.0';
     $slack_message['CLI User'] = 'matt@pantheon.me';
     _slack_tell( $slack_message, $slack_channel, $slack_agent, $slack_icon, $slack_color);
     break;
