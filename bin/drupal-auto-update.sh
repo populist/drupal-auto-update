@@ -8,11 +8,11 @@ echo -e "\nLogging into Terminus..."
 terminus auth:login --machine-token=${TERMINUS_MACHINE_TOKEN}
 
 # setup the multidev environment
-php -f bin/slack_notify.php pantheon_multidev_setup
-echo -e "\nDeleting the ${TERMINUS_ENV} multidev environment..."
-terminus multidev:delete $SITE_UUID.$TERMINUS_ENV --delete-branch --yes
-echo -e "\nRe-creating the ${TERMINUS_ENV} multidev environment..."
-terminus multidev:create $SITE_UUID.live $TERMINUS_ENV
+#php -f bin/slack_notify.php pantheon_multidev_setup
+#echo -e "\nDeleting the ${TERMINUS_ENV} multidev environment..."
+#terminus multidev:delete $SITE_UUID.$TERMINUS_ENV --delete-branch --yes
+#echo -e "\nRe-creating the ${TERMINUS_ENV} multidev environment..."
+#terminus multidev:create $SITE_UUID.live $TERMINUS_ENV
 
 # check for upstream updates
 echo -e "\nChecking for upstream updates on the ${TERMINUS_ENV} multidev..."
