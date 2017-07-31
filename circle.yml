@@ -35,7 +35,7 @@ dependencies:
     - npm install -g slimerjs
 
     # Install Terminus
-    - composer global require -n  "pantheon-systems/terminus:^1"
+    - composer global require -n  "pantheon-systems/terminus:1.3.0"
 
   override:
     - ./bin/drupal-auto-update.sh
