@@ -43,7 +43,8 @@ terminus connection:set $SITE_UUID.$TERMINUS_ENV sftp
 
 # check for Drupal module updates
 echo -e "\nChecking for Drupal module updates on the ${TERMINUS_ENV} multidev..."
-PLUGIN_UPDATES="$(terminus drush $SITE_UUID.$TERMINUS_ENV -- pm-updatestatus --format=list)"
+terminus env:wake -n $SITE_UUID.$TERMINUS_ENV
+PLUGIN_UPDATES="$(terminus drush $SITE_UUID.$TERMINUS_ENV -- pm-updatestatus --format=list | grep -v OK)"
 
 if [[ ${PLUGIN_UPDATES} == "" ]]
 then
