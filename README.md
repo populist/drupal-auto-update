@@ -1,7 +1,7 @@
 # Pantheon Drupal Auto Update #
 
 ## Description ##
-Automate Drupal core, plugin and theme updates on [Pantheon](https://pantheon.io) with Terminus, CircleCI, Drush, BackstopJS and Slack.
+Automate Drupal core, module and theme updates on [Pantheon](https://pantheon.io) with Terminus, CircleCI, Drush, BackstopJS and Slack.
 
 This script will:
 
@@ -13,7 +13,7 @@ This script will:
 5. [Apply Pantheon upstream updates](https://pantheon.io/docs/upstream-updates/)
 	* Drupal core updates are managed in the upstream
 6. Switch the multidev environment `update-dr` to SFTP mode
-7. Check for and apply Drupal plugin updates via [Drush](http://www.drush.org), if available
+7. Check for and apply Drupal module updates via [Drush](http://www.drush.org), if available
 8. Check for and apply Drupal theme updates via [Drush](http://www.drush.org), if available
 	* If no Drupal updates are available the script will complete and report the Slack
 9. Use BackstopJS to run a visual regression test between the live environment and the multidev environment
