@@ -91,6 +91,9 @@ else
     VISUAL_REGRESSION_RESULTS=$(backstop test || echo 'true')
 
     echo "${VISUAL_REGRESSION_RESULTS}"
+    
+    echo -e "\nSync test results to artifacts directory..."
+    rsync -rlvz backstop_data $CIRCLE_ARTIFACTS
 
     if [[ ${VISUAL_REGRESSION_RESULTS} == *"Mismatch errors found"* ]]
     then
