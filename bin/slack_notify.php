@@ -96,7 +96,7 @@ switch($slack_type) {
     $slack_message = "Authenticating to Pantheon with Terminus machine token...";
     _slack_tell( $slack_message, $slack_channel, $slack_agent, $slack_icon, $slack_color);
     $slack_message = array();
-    $slack_message['CLI Version'] = '1.4.1';
+    $slack_message['CLI Version'] = '1.8.0';
     $slack_message['CLI User'] = 'matt@pantheon.me';
     _slack_tell( $slack_message, $slack_channel, $slack_agent, $slack_icon, $slack_color);
     break;
